@@ -1,3 +1,7 @@
 # Log Format
 # ZCZC WEEK# MINUTES LogCode Description
 # LogCode: https://osp4diss.vlsm.org/ETC/logCodes.txt
+ZCZC W00 10 L03 Create Repo, Add Log File and Folders
+ZCZC W00 10 L04 Create/Add GitHub Pages, add content
+ZCZC W00 20 L10 Register Course and Log Data
+ZCZC W00 20 L06 Searching for Textbook, and information on LFS
