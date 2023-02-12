@@ -1,0 +1,11 @@
+version:     "0003--12-Feb-2023"
+copyright:   "2023"
+author:      "Linus A. W."
+title:       "OS231: Operating Systems 2023-2"
+githublink:  "https://github.com/linusabhyasaui/os231/"
+myloglink:   "TXT/mylog.txt"
+encoding:    UTF-8
+markdown:    kramdown
+input:       GFM
+hard_wrap:   false
+github:      [metadata]
