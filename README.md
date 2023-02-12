@@ -1,2 +1,9 @@
 # os231
-<a href="https://github.com/linusabhyasaui/os231/">Github</a> | <a href="TXT/mylog.txt">Log</a> | <a href="../links.md">Links</a> 
+
+By {{ site.author }}
+
+[HOME]({{ site.baseurl }}/) --- [LOG]({{ site.myloglink }}) --- [LINKS]({{ site.baseurl }}/LINKS/) --- [GITHUB]({{ site.githublink }})
+
+Tips on GitHub Pages: https://github.github.com/gfm/
+
+© {{ site.copyright }} --- {{ site.author }} --- Version: {{ site.version }}. 
