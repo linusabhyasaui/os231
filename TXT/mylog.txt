@@ -13,3 +13,4 @@ ZCZC W01 60 L11 Assignment W01
 ZCZC W01 20 L09 Explore Debian
 ZCZC W01 10 L03 Git logging and cleaning
 ZCZC W01 100 L09 Debian Updates and Scripts
+ZCZC W01 240 L05 Quiz W01-2 
