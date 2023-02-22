@@ -3,7 +3,7 @@ copyright:   "2023"
 author:      "Linus A. W."
 title:       "OS231: Operating Systems 2023-1"
 githublink:  "https://github.com/linusabhyasaui/os231/"
-myloglink:   "https://github.com/linusabhyasaui/os231/TXT/mylog.txt"
+myloglink:   "TXT/mylog.txt"
 encoding:    UTF-8
 markdown:    kramdown
 input:       GFM

@@ -14,3 +14,10 @@ ZCZC W01 20 L09 Explore Debian
 ZCZC W01 10 L03 Git logging and cleaning
 ZCZC W01 100 L09 Debian Updates and Scripts
 ZCZC W01 240 L05 Quiz W01-2 
+ZCZC W01 10 L05 Quiz W01-1
+ZCZC W02 100 L02 Class
+ZCZC W02 100 L02 Class
+ZCZC W02 30 L06 GSGS
+ZCZC W02 150 L24 Scripting and Automation
+ZCZC W02 30 L12 Assignment W02
+ZCZC W02 120 L24 Scripting myscript.sh
