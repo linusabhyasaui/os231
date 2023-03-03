@@ -22,3 +22,6 @@ ZCZC W02 150 L24 Scripting and Automation
 ZCZC W02 30 L12 Assignment W02
 ZCZC W02 120 L24 Scripting myscript.sh
 ZCZC W02 30 L05 Quiz W02-2 + Realize that I forgot to submit Quiz W01-2... smh
+ZCZC W03 20 L05 Quiz W03-2
+ZCZC W03 100 L24 Scripting exploration
+ZCZC W03 30 L13 Assignment W03
