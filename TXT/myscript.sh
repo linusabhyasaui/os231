@@ -1,5 +1,8 @@
 #!/bin/bash
 
+# Pull the latest changes with rebase
+git pull --rebase
+
 # Replace with your private key ID
 private_key=6D59FA6B
 
@@ -94,6 +97,22 @@ rm $HOME/git/os231/TXT/my$str_week.tar.bz2 my$str_week.tar.bz2
 
 cp my$str_week.tar.bz2.asc $HOME/git/os231/TXT/my$str_week.tar.bz2.asc
 
+if [ -f "my$str_week.tar.bz2.asc" ]; then
+  echo "File exists"
+  
+  # Set the file name to check
+  filename="my$str_week.tar.bz2.asc"
+
+  # Check if the file is tracked by Git
+  if git ls-files --error-unmatch "$filename" >/dev/null 2>&1; then
+    echo "The file $filename is tracked by Git."
+  else
+    echo "WARNING: The file $filename is NOT tracked by Git!"
+  fi
+else
+  echo "File does not exist"
+fi
+
 echo "Clean Repo"
 rm -f SHA256sum SHA256sum.asc
 
@@ -108,6 +127,9 @@ gpg --output SHA256sum.asc --armor --sign --detach-sign SHA256sum
 
 echo "Verification"
 gpg --verify SHA256sum.asc SHA256sum
+
+echo "Git Check"
+git ls-tree -r HEAD --name-only
 
 echo "myscript.sh  finished"
 echo "===== $str_week ====="
