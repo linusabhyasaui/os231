@@ -25,3 +25,9 @@ ZCZC W02 30 L05 Quiz W02-2 + Realize that I forgot to submit Quiz W01-2... smh
 ZCZC W03 20 L05 Quiz W03-2
 ZCZC W03 100 L24 Scripting exploration
 ZCZC W03 30 L13 Assignment W03
+ZCZC W04 30 L27 SSH config, testing, etc.
+ZCZC W04 50 L02 Class
+ZCZC W04 100 L02 Class
+ZCZC W04 200 L24 Scripting exploration
+ZCZC W04 50 L14 Assignment W04
+ZCZC W04 60 L24 Decrypting Grades and making auto comparator (Failed)
