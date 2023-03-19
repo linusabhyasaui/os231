@@ -36,3 +36,4 @@ ZCZC W05 60 L06 GSGS Git, Linux distros
 ZCZC W05 100 L02 Class
 ZCZC W05 100 L02 Class
 ZCZC W05 200 L24 Scripting exploration
+ZCZC W05 60 L05 Quiz W05
