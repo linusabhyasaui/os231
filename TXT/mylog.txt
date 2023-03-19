@@ -31,3 +31,8 @@ ZCZC W04 100 L02 Class
 ZCZC W04 200 L24 Scripting exploration
 ZCZC W04 50 L14 Assignment W04
 ZCZC W04 60 L24 Decrypting Grades and making auto comparator (Failed)
+ZCZC W05 60 L15 Assignment W05
+ZCZC W05 60 L06 GSGS Git, Linux distros
+ZCZC W05 100 L02 Class
+ZCZC W05 100 L02 Class
+ZCZC W05 200 L24 Scripting exploration
