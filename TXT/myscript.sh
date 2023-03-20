@@ -114,19 +114,19 @@ else
 fi
 
 echo "Clean Repo"
-rm -f SHA256sum SHA256sum.asc
+rm -f SHA256SUM SHA256SUM.asc
 
 echo "Create SHA256sum and Checksum"
 # List of file types: "my*.asc my*.txt my*.sh"
 FILES="my*.asc my*.txt my*.sh"
-sha256sum -c $FILES > SHA256sum
-sha256sum -c SHA256sum 
+sha256sum my* > SHA256SUM
+sha256sum -c SHA256SUM 
 
 echo "Signing"
-gpg --output SHA256sum.asc --armor --sign --detach-sign SHA256sum
+gpg --output SHA256SUM.asc --armor --sign --detach-sign SHA256SUM
 
 echo "Verification"
-gpg --verify SHA256sum.asc SHA256sum
+gpg --verify SHA256SUM.asc SHA256SUM
 
 echo "Git Check"
 git ls-tree -r HEAD --name-only
