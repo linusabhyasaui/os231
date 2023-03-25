@@ -38,3 +38,5 @@ ZCZC W05 100 L02 Class
 ZCZC W05 200 L24 Scripting exploration
 ZCZC W05 60 L05 Quiz W05
 ZCZC W05 30 L15 Assignment W05 Revision
+ZCZC W06 30 L05 Quiz W05 Fixes
+ZCZC W06 60 L16 Assignment W06, Study included scripts
