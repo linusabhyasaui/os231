@@ -133,4 +133,6 @@ git ls-tree -r HEAD --name-only
 
 echo "myscript.sh  finished"
 echo "===== $str_week ====="
+
+git status
 exit 0

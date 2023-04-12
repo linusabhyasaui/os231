@@ -40,3 +40,14 @@ ZCZC W05 60 L05 Quiz W05
 ZCZC W05 30 L15 Assignment W05 Revision
 ZCZC W06 30 L05 Quiz W05 Fixes
 ZCZC W06 60 L16 Assignment W06, Study included scripts
+ZCZC W07 100 L UTS Prep
+ZCZC W07 100 L02 Class
+ZCZC W07 60 L05 Study for UTS part 2
+ZCZC W07 100 L06 GSGS
+ZCZC W07 100 L08 Teaching and helping Friend
+ZCZC W07 120 L22 Linux Distros
+ZCZC W07 100 L02 Class
+ZCZC W07 120 L32 Videos on Networking (bridge, nat) and Setting up Ubuntu and WSL
+ZCZC W07 60 L17 Assignment W07
+ZCZC W07 30 L05 W07 Quiz W07-2
+
