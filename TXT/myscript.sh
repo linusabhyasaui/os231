@@ -85,9 +85,10 @@ else
 fi
 
 folder_path=$RESDIR/$str_week
+cd folder_path
 
 # Compress the folder into a tarball
-tar cfj my$str_week.tar.bz2 $folder_path
+tar cfj my$str_week.tar.bz2 *
 
 # Encrypt the tarball using the private key and recipient's public key
 gpg --armor --output my$str_week.tar.bz2.asc --encrypt --recipient $public_key --sign --recipient $private_key my$str_week.tar.bz2
@@ -96,6 +97,8 @@ gpg --armor --output my$str_week.tar.bz2.asc --encrypt --recipient $public_key -
 rm $HOME/git/os231/TXT/my$str_week.tar.bz2 my$str_week.tar.bz2
 
 cp my$str_week.tar.bz2.asc $HOME/git/os231/TXT/my$str_week.tar.bz2.asc
+
+cd ~/git/os231/TXT
 
 if [ -f "my$str_week.tar.bz2.asc" ]; then
   echo "File exists"

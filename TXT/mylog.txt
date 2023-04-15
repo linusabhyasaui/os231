@@ -50,4 +50,4 @@ ZCZC W07 100 L02 Class
 ZCZC W07 120 L32 Videos on Networking (bridge, nat) and Setting up Ubuntu and WSL
 ZCZC W07 60 L17 Assignment W07
 ZCZC W07 30 L05 W07 Quiz W07-2
-
+ZCZC W07 60 L17 Assignment Revision
