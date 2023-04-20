@@ -51,3 +51,11 @@ ZCZC W07 120 L32 Videos on Networking (bridge, nat) and Setting up Ubuntu and WS
 ZCZC W07 60 L17 Assignment W07
 ZCZC W07 30 L05 W07 Quiz W07-2
 ZCZC W07 60 L17 Assignment Revision
+ZCZC W08 30 L07 Demos W07
+ZCZC W08 60 L27 Networking and SSH
+ZCZC W08 120 L18 Assignment W08
+ZCZC W08 100 L02 Class
+ZCZC W08 30 L18 Assignment W08
+ZCZC W08 100 L02 Class
+ZCZC W08 300 L27 Setting up, Fixing, Adjusting Remote Access systems and SSH
+

@@ -22,9 +22,13 @@ else
 
   echo "Checking Week"
   echo "Getting Local Week"
+  cat $MYWEEK
   string=$(grep -oP 'W\d{2}' $HOME/.brew/.week)
-
-  unset WEEK WEEKL WEEKS
+  
+  unset WEEK WEEKL WEEKS tempweek
+  declare -i WEEK=0
+  declare -i WEEKL=0
+  declare -i WEEKS=0
   # Check if the string is not empty
   if [ ! -z "$string" ]; then
     if [[ $string =~ ^W([0-9]+)$ ]]; then
@@ -32,6 +36,9 @@ else
       WEEKL=${BASH_REMATCH[1]}
     fi
   fi
+
+  # WEEKL = cat $MYWEEK
+  echo WEEKL
 
   echo "Getting Server Week"
   WEEKURL="https://os.vlsm.org/WEEK/WEEK.txt"
@@ -47,6 +54,7 @@ else
     (( $DATE > ${intARR[$II]} )) || break;
   done
   WEEKS=$II
+  echo $WEEKS
 
   if ((WEEKL - WEEKS == 0)); then
     WEEK=$WEEKS
@@ -56,8 +64,9 @@ else
     exit 1
   fi
 
-#  echo "$WEEK v $WEEKL v $WEEKS"
 fi
+echo "$WEEK v $WEEKL v $WEEKS"
+cat $MYWEEK
 
 # Is this the correct WEEK?
 read -r -p "Is this WEEK $WEEK? [y/N] " response
@@ -67,25 +76,30 @@ case "$response" in
     *)
         echo "It is not Week $WEEK!"
         echo "myscript.sh 00(week)"
+        exit 1
         ;;
 esac
 
-str_week=$(printf "W%02d" $WEEK)
+str_week=$(printf "W%02d" ${WEEK#0})
+echo $str_week
+cat $MYWEEK
 
-if ![[ $(head -n 1 $HOME/git/os231/TXT/myupdate.txt | tail -c 4) == "$str_week" ]]; then
+if [ $(head -n 1 $HOME/git/os231/TXT/myupdate.txt | tail -c 4) != "$WEEK" ]; then
   echo "myupdate.txt is of a different week!"
   cat $HOME/git/os231/TXT/myupdate.txt
   read -p "Are you sure you want to continue? (y/n)" ans
   if ! [[ $ans =~ y ]]; then
-    echo "log cancled"
+    echo "log canceled"
     exit 0
   fi
 else
   echo "myupdate.txt is of same week, continuing..."
 fi
 
-folder_path=$RESDIR/$str_week
-cd folder_path
+echo "Accessing: $RESDIR"
+cd $RESDIR
+echo "Accessing: $str_week"
+cd $str_week
 
 # Compress the folder into a tarball
 tar cfj my$str_week.tar.bz2 *
@@ -94,7 +108,7 @@ tar cfj my$str_week.tar.bz2 *
 gpg --armor --output my$str_week.tar.bz2.asc --encrypt --recipient $public_key --sign --recipient $private_key my$str_week.tar.bz2
 
 # Delete the original tarball
-rm $HOME/git/os231/TXT/my$str_week.tar.bz2 my$str_week.tar.bz2
+rm $HOME/git/os231/TXT/my$str_week.tar.bz2
 
 cp my$str_week.tar.bz2.asc $HOME/git/os231/TXT/my$str_week.tar.bz2.asc
 
