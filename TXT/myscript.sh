@@ -1,48 +1,25 @@
 #!/bin/bash
 
-# Pull the latest changes with rebase
-git pull --rebase
-
 # Replace with your private key ID
 private_key=6D59FA6B
 
 # Replace with the recipient's public key ID
 public_key=15403B20
 
+# WEEKURL
+WEEKURL="https://os.vlsm.org/WEEK/WEEK.txt"
+
 # Replace with the path of the folder you want to encrypt
 RESDIR="$HOME/RESULT/"
 
 # Check Week
-unset WEEK
-
-if [[ $1 =~ ^([0-9]{1,2})$ ]]; then
+unset WEEK 
+if [ ! -z "${1##*[!0-9]*}" ] ; then
   WEEK=$1
 else 
   echo "No args/wrong format (Expected: dd)"
-
   echo "Checking Week"
-  echo "Getting Local Week"
-  cat $MYWEEK
-  string=$(grep -oP 'W\d{2}' $HOME/.brew/.week)
-  
-  unset WEEK WEEKL WEEKS tempweek
-  declare -i WEEK=0
-  declare -i WEEKL=0
-  declare -i WEEKS=0
-  # Check if the string is not empty
-  if [ ! -z "$string" ]; then
-    if [[ $string =~ ^W([0-9]+)$ ]]; then
-      # Extract the number from the input
-      WEEKL=${BASH_REMATCH[1]}
-    fi
-  fi
-
-  # WEEKL = cat $MYWEEK
-  echo WEEKL
-
-  echo "Getting Server Week"
-  WEEKURL="https://os.vlsm.org/WEEK/WEEK.txt"
-  [[ $(wget $WEEKURL -O- 2>/dev/null) ]] || nolink $WEEKURL
+  echo "Asking $WEEKURL"
   intARR=($(wget -q -O - $WEEKURL | awk '/\| Week / { 
     cmd = "date -d " $2 " +%s"
     cmd | getline mydate
@@ -53,43 +30,30 @@ else
   for II in ${!intARR[@]} ; do
     (( $DATE > ${intARR[$II]} )) || break;
   done
-  WEEKS=$II
-  echo $WEEKS
-
-  if ((WEEKL - WEEKS == 0)); then
-    WEEK=$WEEKS
-  else 
-    echo "Local week and Server week are different"
-    echo "Use myscript.sh 00(week)"
-    exit 1
-  fi
-
+  WEEK=$II
 fi
-echo "$WEEK v $WEEKL v $WEEKS"
-cat $MYWEEK
+
+(( WEEK > 11 )) && WEEK=11
+WEEKS=$(printf "W%2.2d\n" $WEEK)
 
 # Is this the correct WEEK?
-read -r -p "Is this WEEK $WEEK? [y/N] " response
+read -r -p "Is this WEEK $WEEKS? [y/N] " response
 case "$response" in
     [yY][eE][sS]|[yY]) 
         ;;
     *)
-        echo "It is not Week $WEEK!"
+        echo "It is not Week $WEEKS!"
         echo "myscript.sh 00(week)"
         exit 1
         ;;
 esac
 
-str_week=$(printf "W%02d" ${WEEK#0})
-echo $str_week
-cat $MYWEEK
-
-if [ $(head -n 1 $HOME/git/os231/TXT/myupdate.txt | tail -c 4) != "$WEEK" ]; then
+if [ $(head -n 1 $HOME/git/os231/TXT/myupdate.txt | tail -c 4) != "$WEEKS" ]; then
   echo "myupdate.txt is of a different week!"
   cat $HOME/git/os231/TXT/myupdate.txt
   read -p "Are you sure you want to continue? (y/n)" ans
   if ! [[ $ans =~ y ]]; then
-    echo "log canceled"
+    echo "script canceled"
     exit 0
   fi
 else
@@ -97,28 +61,32 @@ else
 fi
 
 echo "Accessing: $RESDIR"
-cd $RESDIR
-echo "Accessing: $str_week"
-cd $str_week
+pushd $RESDIR
+for II in W?? ; do
+    [ -d $II ] || continue
+    TARFILE=my$II.tar.bz2
+    TARFASC=$TARFILE.asc
+    rm -vf $TARFILE $TARFASC
+    
+    echo "tar cfj $TARFILE $II/"
+    tar cfj $TARFILE $II/
+    
+    echo "Encrypt $II"
+    gpg --armor --output $TARFASC --encrypt --recipient $public_key --recipient $private_key $TARFILE
+done
+popd
 
-# Compress the folder into a tarball
-tar cfj my$str_week.tar.bz2 *
+if [[ "$WEEKS" != "W00" ]] && [[ "$WEEKS" != "W01" ]] ; then
+    II="${RESDIR}my$WEEKS.tar.bz2.asc"
+    echo "Check and move $II..."
+    [ -f $II ] && mv -vf $II .
+fi
 
-# Encrypt the tarball using the private key and recipient's public key
-gpg --armor --output my$str_week.tar.bz2.asc --encrypt --recipient $public_key --sign --recipient $private_key my$str_week.tar.bz2
-
-# Delete the original tarball
-rm $HOME/git/os231/TXT/my$str_week.tar.bz2
-
-cp my$str_week.tar.bz2.asc $HOME/git/os231/TXT/my$str_week.tar.bz2.asc
-
-cd ~/git/os231/TXT
-
-if [ -f "my$str_week.tar.bz2.asc" ]; then
+if [ -f "my$WEEKS.tar.bz2.asc" ]; then
   echo "File exists"
   
   # Set the file name to check
-  filename="my$str_week.tar.bz2.asc"
+  filename="my$WEEKS.tar.bz2.asc"
 
   # Check if the file is tracked by Git
   if git ls-files --error-unmatch "$filename" >/dev/null 2>&1; then
@@ -149,7 +117,7 @@ echo "Git Check"
 git ls-tree -r HEAD --name-only
 
 echo "myscript.sh  finished"
-echo "===== $str_week ====="
+echo "===== $WEEKS ====="
 
 git status
 exit 0
