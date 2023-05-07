@@ -60,5 +60,6 @@ ZCZC W08 100 L02 Class
 ZCZC W08 300 L27 Setting up, Fixing, Adjusting Remote Access systems and SSH
 ZCZC W08 200 L24 Script Repair attempts
 ZCZC W08 40 L07 Running Demos W08
-ZCZC W07 60 L05 Q08 Quiz
+ZCZC W08 60 L05 Q08 Quiz
+ZCZC W08 10 L05 Weekly Quiz
 

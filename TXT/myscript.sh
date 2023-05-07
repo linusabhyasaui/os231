@@ -6,20 +6,70 @@ private_key=6D59FA6B
 ## Replace with the recipient's public key ID
 public_key=15403B20
 
+## Functions
+usage()  { 
+	echo "Usage: $0 [-w <WEEK>] [-g] [-v] [-h]" 1>&2; 
+	exit 1; 
+}
+nolink() { echo "No LINK $1"            1>&2; exit 1; }
+
+## Assignments Results folder
+RESDIR="$HOME/RESULT/"
+
+## SHASUM Filename
+SHA="SHA256SUM"
+
+## Logfile (TODO)
+LOG=""
+
 ## WEEKURL
 WEEKURL="https://os.vlsm.org/WEEK/WEEK.txt"
 
-## Replace with the path of the folder you want to encrypt
-RESDIR="$HOME/RESULT/"
-
 ## Check Week
-unset WEEK 
+unset WEEK DEFAULT GIT VERBOSE
+GIT=0
+VERBOSE=0 
 if [ ! -z "${1##*[!0-9]*}" ] ; then
   WEEK=$1
-else 
-  #echo "No args/wrong format (Expected: dd)"
-  #echo "Checking Week"
-  #echo "Asking $WEEKURL"
+elif [ -z $1 ] ; then
+  DEFAULT=1
+else while getopts ":w:W:g:v:gv:h" varTMP
+  do
+    case "${varTMP}" in 
+	w|W)
+       	  WEEK=${OPTARG} 
+          if [ ! -z "${WEEK##*[!0-9]*}" ]; then 
+	    echo "-w requires input dd./n"
+	    usage 
+	  fi
+	  ;;
+    	g)
+	  GIT=1 
+	  ;;
+	v)
+	  VERBOSE=1 
+	  ;;
+	## TODO: Full auto (-a)
+	## TODO: Auto log
+	## TODO: changeFilenames etc.
+	h)
+	  usage
+	  ;;
+	\?)
+	  echo "Invalid option: -$varTMP" >&2
+	  ;;
+	esac
+  done
+  [ -z $WEEK ] && usage
+fi
+
+if [ $DEFAULT ] ; then 
+  if [ $verbose -eq 1 ]; then
+    echo "Checking Week"
+    echo "Asking $WEEKURL"
+  fi
+  
+  [[ $(wget $WEEKURL -O- 2>/dev/null) ]] || nolink $WEEKURL
   intARR=($(wget -q -O - $WEEKURL | awk '/\| Week / { 
     cmd = "date -d " $2 " +%s"
     cmd | getline mydate
@@ -57,8 +107,8 @@ if [ $(head -n 1 $HOME/git/os231/TXT/myupdate.txt | tail -c 4) != "$WEEKS" ]; th
     echo "script canceled"
     exit 0
   fi
-#else
-  #echo "myupdate.txt is of same week, continuing..."
+elif [ $VERBOSE -eq 1 ]; then
+  echo "myupdate.txt is of same week, continuing..."
 fi
 
 ## Collecting Assignemts
@@ -72,7 +122,9 @@ for II in W?? ; do
     echo "tar cfj $TARFILE $II/"
     tar cfj $TARFILE $II/
     
-    #echo "Encrypt $II"
+    if [ $VERBOSE -eq 1 ]; then
+        echo "Encrypt $II"
+    fi
     echo "gpg --armor --output $TARFASC --encrypt --recipient $public_key --recipient $private_key $TARFILE" 
     gpg --armor --output $TARFASC --encrypt --recipient $public_key --recipient $private_key $TARFILE
 done
@@ -110,31 +162,39 @@ echo "# ################# VERIFY ######### ######### ######### ########"
 echo "gpg --verify SHA256SUM.asc SHA256SUM"
 gpg --verify SHA256SUM.asc SHA256SUM
 
-## Git works (TODO: if -g)
-#echo "Git Check"
-#git ls-tree -r HEAD --name-only
-#git status
 ## Verify Assignments
 if [ ! -f "my$WEEKS.tar.bz2.asc" ]; then
   echo "File does not exist"
   exit 1
-#else
-  #echo "File exists"
-  
+elif [ $VERBOSE -eq 1 ]; then
+  echo "File exists"
+
   ## Set the file name to check
-  #filename="my$WEEKS.tar.bz2.asc"
+  filename="my$WEEKS.tar.bz2.asc"
 
-  ## Check if file is tracked by SHA256SUM (TODO)
+  ## Git works
+  if [ GIT -eq 1 ] ; then 
+    echo "Git Check"
 
-  ## Check if the file is tracked by Git
-  #if git ls-files --error-unmatch "$filename" >/dev/null 2>&1; then
-  #  echo "The file $filename is tracked by Git."
-  #else
-  #  echo "WARNING: The file $filename is NOT tracked by Git!"
-  #fi
+    ## Check if the file is tracked by Git
+    if git ls-files --error-unmatch "$filename" >/dev/null 2>&1; then
+      echo "The file $filename is tracked by Git."
+    else
+      echo "WARNING: The file $filename is NOT tracked by Git!"
+    fi
+    
+    git ls-tree -r HEAD --name-only
+    git status
+  fi
+  
+  ## Check if file is tracked by SHA256SUM
+  if grep -q "$filename" "SHA256SUM"; then
+    echo "$filename is tracked in SHA256SUM"
+  else
+    echo "$filename is not tracked in SHA256SUM"
+  fi
 fi
 
-#echo "myscript.sh  finished"
 echo ""
 echo "==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ==== ===="
 echo "==== ==== ==== ATTN: is this WEEK $WEEK ?? === ==== ==== ===="
