@@ -13,4 +13,8 @@ Tips on Commands: https://www.howtogeek.com/
 
 Tips on VIM: https://linuxize.com/post/how-to-copy-cut-paste-in-vim/
 
+More tips on Commands: https://www.cyberciti.biz/
+
+LFS Instruction manual: https://www.linuxfromscratch.org/
+
 © {{ site.copyright }} --- {{ site.author }} --- Version: {{ site.version }}. 
