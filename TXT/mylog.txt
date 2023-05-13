@@ -62,4 +62,13 @@ ZCZC W08 200 L24 Script Repair attempts
 ZCZC W08 40 L07 Running Demos W08
 ZCZC W08 60 L05 Q08 Quiz
 ZCZC W08 10 L05 Weekly Quiz
-
+ZCZC W09 100 L02 Class
+ZCZC W09 40 L24 Scripting
+ZCZC W09 100 L02 Class
+ZCZC W09 100 L05 Q09 Quiz 1&2
+ZCZC W09 40 L04 GHP, Docusaurus
+ZCZC W09 20 L05 Quiz Scele
+ZCZC W09 30 L07 Demos W08
+ZCZC W09 360 L19 Assignment W09
+ZCZC W09 30 L06 GSGS and Reading links
+ZCZC W09 150 L19 Assignment W09 Contd.
